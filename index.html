@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art Events</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/my.css" />
+  <link rel="stylesheet" href="css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <link rel="stylesheet" href="MarkerCluster.css" />
+  <style>
+    .carousel-item.bg-cover {
+      position: relative;
+      height: 80vh;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .carousel-item.bg-cover::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.15);
+ 
+    }
+  </style>
+  <script src="js/table.util.js"></script>
+</head>
+
+<body>
+  <!-- s01navbar -->
+  <section id="s01" class="bg-light">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-light navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="images/gramophone.gif" style="height: 5vh; width: auto" />
+          </a>
+          <!-- 漢堡條 -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="artEvents.html">首頁</a>
+              </li>
+              
+              <li class="nav-item px-2 d-none" id="s01_order_btn">
+                <a class="btn btn-secondary" href="artEvents-admin.html" target="_blank">後台管理</a>
+              </li>
+              <li class="nav-item d-none" id="s01_control_panel_btn">
+                <a class="btn btn-secondary" href="artEvents-dashboard-controlPanel_v1.html" target="_blank"
+                  id="s01_dashboard_btn">儀表板</a>
+              </li>
+            </ul>
+            <div>
+              <!-- 會員 -->
+              <button class="btn navbar-brand d-none" id="s01_member" data-bs-toggle="modal"
+                data-bs-target="#memberModal">
+                <img src="images/target-audience.gif" style="height: 5vh; width: auto" />
+              </button>
+
+              <!-- 購物車 -->
+              <button class="navbar-brand d-none" id="s01_cart">
+                <img src="images/shopping-cart.gif" style="height: 5vh; width: auto" />
+              </button>
+
+              <span class="h4 tx-004 fw-900 me-3 d-none" id="s01_username_showtext">歡迎會員:
+                <span class="h3 tx-008" id="s01_username_text">XXX</span></span>
+
+
+              <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#registerModal" id="s01_reg_btn">
+                註冊
+              </button>
+
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal" id="s01_login_btn">
+                登入
+              </button>
+
+              <button class="btn btn-warning d-none" id="s01_logout_btn">
+                登出
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+  <!-- s02輪播 -->
+  <section id="s02">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
+
+      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel"></div>
+      <div class="carousel-inner" style="height: 80vh; width: auto">
+
+        <div class="carousel-item bg-cover active" style="
+              height: 80vh;
+              background-image: url(images/ni03.jpeg);
+              background-attachment: fixed;
+            ">
+          <div class="carousel-caption d-none d-md-block p-3 rounded-4 shadow-lg"
+            style="max-width: 200px; margin: 0 auto"></div>
+        </div>
+        <div class="carousel-item bg-cover" style="
+              height: 80vh;
+              background-image: url(images/hp02.jpg);
+              background-attachment: fixed;
+            ">
+          <div class="carousel-caption d-none d-md-block p-3 rounded-4 shadow-lg"
+            style="max-width: 200px; margin: 0 auto"></div>
+        </div>
+        <div class="carousel-item bg-cover" style="
+              height: 80vh;
+              background-image: url(images/di03.jpg);
+              background-attachment: fixed;
+            ">
+          <div class="carousel-caption d-none d-md-block p-3 rounded-4 shadow-lg"
+            style="max-width: 200px; margin: 0 auto"></div>
+        </div>
+        <div class="carousel-item bg-cover" style="
+              height: 100vh;
+              background-image: url(images/la02.jpg);
+              background-attachment: fixed;
+            ">
+          <div class="carousel-caption d-none d-md-block p-3 rounded-4 shadow-lg"
+            style="max-width: 200px; margin: 0 auto"></div>
+        </div>
+      </div>
+      <button class="carousel-control-prev tx-006" type="button" data-bs-target="#carouselExampleFade"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">上一頁</span>
+      </button>
+      <button class="carousel-control-next tx-006" type="button" data-bs-target="#carouselExampleFade"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">下一頁</span>
+      </button>
+    </div>
+  </section>
+
+  <section id="s03">
+    <div class="container mt-5">
+      <div class="row">
+        <div class="display-4 fw-900 text-center tx-003">
+          藝文活動Ｘ購票平台
+        </div>
+        <div class="h4 text-center tx-002 mt-2">
+          輕鬆發現藝文樂趣，一鍵開啟美好體驗！
+        </div>
+
+        <br />
+        <h5 class="mb-1 text-center mt-3">
+          我們提供豐富多元的 藝文活動資訊 及 購票服務
+          <br />用戶可以悠閒探索各種有趣主題，
+          <br />一鍵購票超方便，省時又省力！
+          <br />輕鬆安排專屬行程，開啟一場場 難忘的精彩冒險！
+        </h5>
+      </div>
+    </div>
+    <div class="mt-5 container-fluid">
+      <div class="display-4 fw-900 text-center my-3 tx-004">查詢藝文活動</div>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <select name="selectCity_arts" id="selectCity_arts" class="form-select form-select-lg mt-4">
+            <option value="" class="text-center" selected disabled>
+              ---選擇縣市名稱---
+            </option>
+            <option value="台中市">台中市</option>
+          </select>
+          <select name="selectArea" id="selectArea" class="form-select form-select-lg mt-3">
+            <option value="" class="text-center" selected disabled>
+              ---選擇鄉鎮區名稱---
+            </option>
+            <option value="西屯區">西屯區</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row my-3 mx-5 justify-content-evenly" id="artslist">
+        <div class="card mb-3 shadow col-md-6">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="images/exh02.png" class="img-fluid rounded-start mt-2" alt="展覽圖片" />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title text-danger fw-bold">展覽: xxx</h5>
+                <h6 class="fw-bold">地點: xxx</h6>
+                <p class="fw-bold">地址: xxx</p>
+                <p>
+                  <small class="badge bg-003 wow animate__heartBeat" data-wow-duration="1s" data-wow-delay="0s"
+                    data-wow-iteration="infinite">限時優惠</small>
+                  <span>(倒數時間)</span>
+                </p>
+                <div class="d-flex justify-content-end">
+
+                  <a class="btn btn-outline-info btn-sm" href="artEvents-product.html?id=123456">查看更多
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- registerModal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- modal-xl 長的輸入框 -->
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- 同按鈕顏色 -->
+        <div class="modal-header text-bg-warning">
+          <h1 class="modal-title fs-4 fw-900" id="exampleModalLabel">
+            會員註冊
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3">
+              <label for="" class="form-label">帳號</label>
+              <input type="text" class="form-control" id="username_reg" name="username_reg" placeholder="3-6字數" />
+              <div class="valid-feedback" id="regModal_username_valid_feedback">
+                符合規則
+              </div>
+              <div class="invalid-feedback" id="regModal_username_invalid_feedback">
+                不符合規則
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">密碼</label>
+              <input type="password" class="form-control" id="password_reg" name="password_reg" placeholder="3-6字數" />
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">確認密碼</label>
+              <input type="password" class="form-control" id="re_password_reg" name="re_password_reg" />
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+
+            <div class="mb-3 input-group">
+              <label for="" class="form-label">Email</label>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="3-10字數" id="email_reg" name="email_reg" />
+
+                <div class="valid-feedback">符合規則</div>
+                <div class="invalid-feedback">不符合規則</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">性別</label>
+              <div class="d-block">
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="male" name="gender" value="male" />
+                  <label for="" class="form-check-label">male</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="female" name="gender" value="female" />
+                  <label for="" class="form-check-label">female</label>
+                </div>
+              </div>
+
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="" class="form-label">年齡</label>
+              <div class="d-block">
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="under18" name="age" value="under18" />
+                  <label for="" class="form-check-label">18以下</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="18_28" name="age" value="18_28" />
+                  <label for="" class="form-check-label">18-28</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="29_40" name="age" value="29_40" />
+                  <label for="" class="form-check-label">29-40</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="41_64" name="age" value="41_64" />
+                  <label for="" class="form-check-label">41-64</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                  <input type="radio" class="form-check-input" id="65plus" name="age" value="65plus" />
+                  <label for="" class="form-check-label">65以上</label>
+                </div>
+              </div>
+
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="" class="select-label">居住地</label>
+              <select name="selectCity_add" id="selectCity_add" class="form-select mt-2">
+                <option value="" class="text-center" selected disabled>
+                  ---選擇居住地---
+                </option>
+                <option value="">台中市</option>
+              </select>
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">年收入</label>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="under39" name="income" value="under39" />
+                <label for="" class="form-check-label">年收39萬以下</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="40_69" name="income" value="40_69" />
+                <label for="" class="form-check-label">年收40-69萬</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="70_99" name="income" value="70_99" />
+                <label for="" class="form-check-label">年收70-99萬</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="100_199" name="income" value="100_199" />
+                <label for="" class="form-check-label">年收100-199萬</label>
+              </div>
+
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="200plus" name="income" value="200plus" />
+                <label for="" class="form-check-label">年收200萬以上</label>
+              </div>
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-check form-switch mt-auto">
+                <input type="checkbox" class="form-check-input is-invalid" role="switch" id="chk01" name="chk01" />
+                <label for="chk01" class="form-check-label">不同意</label>
+
+                <div class="valid-feedback">.</div>
+                <div class="invalid-feedback">須同意始能註冊!</div>
+              </div>
+            </div>
+
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                取消
+              </button>
+              <button type="button" class="btn btn-info text-white" id="ok_btn_reg">
+                送出
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <!-- modal-xl 長的輸入框 -->
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- 同按鈕顏色 -->
+        <div class="modal-header text-bg-success">
+          <h1 class="modal-title fs-4 fw-900" id="loginModalLabel">
+            會員登入
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3">
+              <label for="" class="form-label">帳號</label>
+              <input type="text" class="form-control" id="username_login" name="username_login" placeholder="請輸入帳號"
+                required />
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">密碼</label>
+              <input type="password" class="form-control" id="password_login" name="password_login" placeholder="請輸入密碼"
+                required />
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">
+                取消
+              </button>
+              <button type="button" class="btn btn-info text-white" id="ok_btn_log">
+                送出
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModalLabel" aria-hidden="true">
+    <!-- modal-xl 長的輸入框 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <!-- 同按鈕顏色 -->
+        <div class="modal-header text-bg-warning">
+          <h1 class="modal-title fs-4 fw-900 text-white" id="memberModalLabel">
+            xxx的訂單明細
+            <br />等級:xxx
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3">
+              <div class="col-12">
+                <table class="table shadow-lg mt-2 table-rwd">
+                  <thead>
+                    <tr>
+                      <th>建單時間</th>
+                      <th>訂單編號</th>
+                      <th>產品編號</th>
+                      <th>商品數量</th>
+                      <th>商品單價</th>
+                      <th>會員等級</th>
+                      <th>會員折扣</th>
+                      <th>商品總額</th>
+                      <th>折扣金額</th>
+                      <th>訂單總額</th>
+                      <th>訂單狀態</th>
+                    </tr>
+                  </thead>
+                  <tbody id="myorder">
+                    <tr>
+                      <td data-th="建單時間">xx</td>
+                      <td data-th="訂單編號">xx</td>
+                      <td data-th="產品編號">xx</td>
+                      <td data-th="商品數量">xx</td>
+                      <td data-th="商品單價">xx</td>
+                      <td data-th="會員等級">xx</td>
+                      <td data-th="會員折扣">xx</td>
+                      <td data-th="商品總額">xx</td>
+                      <td data-th="折扣金額">xx</td>
+                      <td data-th="訂單總額">xx</td>
+                      <td data-th="訂單狀態">xx</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+                  <!-- 每頁筆數選擇 -->
+                  <div class="d-flex align-items-center">
+                    <label for="perPageSelect" class="me-2 mb-0">每頁顯示筆數：</label>
+                    <select id="perPageSelect" class="form-select w-auto">
+                      <option value="1">1 筆</option>
+                      <option value="5">5 筆</option>
+                      <option value="10" selected>10 筆</option>
+                      <option value="20">20 筆</option>
+                      <option value="50">50 筆</option>
+                    </select>
+                  </div>
+
+                  <!-- 分頁區塊 -->
+                  <div id="pagination" class="mt-2 mt-md-0"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script>
+    // new WOW().init();
+    new WOW();
+  </script>
+
+
+  <script>
+    var allCityData_add; //所有縣市資料
+    var selectCity_add; //註冊用居住地
+    var allarts; //所有藝文資料
+
+    var allCityData_arts; //所有縣市資料
+    var selectCity_arts; //活動用縣市
+    var selectArea; //活動用鄉鎮
+
+    var flag_username_reg = false;
+    var flag_password_reg = false;
+    var flag_re_password_reg = false;
+    var flag_email_reg = false;
+    var flag_gender = false;
+    var flag_age = false;
+    var flag_selectCity_add = false;
+    var flag_income = false;
+
+    var flag_username_login = false;
+    var flag_password_login = false;
+
+    $(function () {
+
+      $.ajax({
+        type: "GET",
+        url: "https://url/porduct_control.php?action=get_all",
+        dataType: "json",
+        success: function (dbResult) {
+          console.log(dbResult);
+          allarts = dbResult.data;
+          console.log(allarts);
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "https://url/porduct_control.php?action=get_all",
+            icon: "error",
+          });
+        },
+      });
+
+      // 居住地選單-縣市資料
+      $.ajax({
+        type: "GET",
+        url: "js/CityCountyData.json",
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          allCityData_add = data;
+          console.log(allCityData_add);
+
+          // 顯示居住地選單
+          $("#selectCity_add").empty();
+          $("#selectCity_add").append(
+            ' <option value="" class="text-center" selected disabled>---選擇居住地---</option>'
+          );
+          data.forEach(function (item) {
+            var strHTML = `<option value="${item.CityName}">${item.CityName}</option>`;
+            $("#selectCity_add").append(strHTML);
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "js/CityCountyData.json",
+            icon: "error",
+          });
+        },
+      });
+
+      // 顯示活動的縣市選單
+      $.ajax({
+        type: "GET",
+        url: "js/CityCountyData.json",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+          console.log(data);
+          allCityData_arts = data;
+          console.log(allCityData_arts);
+
+          // 顯示居住地選單
+          $("#selectCity_arts").empty();
+          $("#selectCity_arts").append(
+            ' <option value="" class="text-center" selected disabled>---選擇縣市名稱---</option>'
+          );
+          data.forEach(function (item) {
+            var strHTML = `<option value="${item.CityName}">${item.CityName}</option>`;
+            $("#selectCity_arts").append(strHTML);
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "js/CityCountyData.json",
+            icon: "error",
+          });
+        },
+      });
+
+      //監聽活動的縣市選單
+      $("#selectCity_arts").change(function () {
+        console.log($(this).val());
+        selectCity_arts = $(this).val();
+
+        //過濾所選取的縣市名稱, 並找出該鄉鎮區的資料
+        allCityData_arts.forEach(function (item) {
+          if (item.CityName == selectCity_arts) {
+            $("#selectArea").empty();
+            $("#selectArea").append(
+              '<option value="" class="text-center" selected disabled>---選擇鄉鎮區名稱---</option>'
+            );
+            item.AreaList.forEach(function (itemarea) {
+              console.log(itemarea.AreaName);
+              //產生鄉鎮區選單
+              var strHTML = `<option value="${itemarea.AreaName}">${itemarea.AreaName}</option>`;
+              $("#selectArea").append(strHTML);
+            });
+          }
+        });
+      });
+      //監聽鄉鎮區選單
+      $("#selectArea").change(function () {
+        selectArea = $(this).val();
+        console.log("allarts", allarts);
+        console.log("selectArea", $(this).val());
+        console.log("selectCity_arts", selectCity_arts);
+
+        if (!selectCity_arts || !selectArea) {
+          return;
+        }
+
+
+
+        $("#artslist").empty();
+        allarts
+          .filter((item) => {
+            return item.showInfo[0].location.startsWith(
+              selectCity_arts + selectArea
+            );
+          })
+          .sort((a, b) => {
+            return new Date(a.startDate) - new Date(b.startDate);
+          })
+          .forEach((item) => {
+            // console.log(item);
+            const diffDays = countDown(item.startDate);
+
+            if (diffDays < 1) {
+              return;
+            }
+
+            var strHtml = `
+                <div class="card mb-3 shadow col-md-5">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                    <img src="images/exh02.png" class="img-fluid rounded-start mt-2" style="max-width: 100%" alt="展覽圖片">
+                    </div>
+                    <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger fw-bold"> ${item.title}</h5>
+                        <h6 class="fw-bold">地點: ${item.showInfo[0].locationName}</h6>
+                        <p class="fw-bold">地址: ${item.showInfo[0].location}</p>
+                        <p><small class="badge bg-003 wow animate__heartBeat" data-wow-duration="1s" data-wow-delay="0s"
+                        data-wow-iteration="infinite">限時優惠</small>
+                        <span class="h3 fw-900">倒數: <span class="text-danger">${diffDays}</span> 天</span></p>
+                        <div class="d-flex justify-content-end">
+                        <a class="btn btn-outline-info btn-sm" href="artEvents-product.html?id=${item.UID}">查看更多
+                            </a></div>
+
+                    </div>
+                    </div>
+                </div>
+                </div>
+                `;
+            $("#artslist").append(strHtml);
+          });
+      });
+    });
+
+    if (getCookie("Uid01")) {
+      //將uid01傳遞至後端API執行驗證
+      //input {"uid01" : "***"}
+      var JSONdata = {};
+      JSONdata["uid01"] = getCookie("Uid01");
+      console.log(JSON.stringify(JSONdata));
+
+      $.ajax({
+        type: "POST",
+        url: "https://url/artEvents-member_control_api_v2.php?action=checkuid",
+        data: JSON.stringify(JSONdata),
+        dataType: "json",
+        success: showdata_checkuid,
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "artEvents-member_control_api_v2.php?action=checkuid",
+            icon: "error",
+          });
+        },
+      });
+    }
+
+    $(function (data) {
+      //即時監聽username_reg
+      // 即時監聽username_reg
+      $("#username_reg").bind("input propertychange", function () {
+        // 清除之前設定的計時器
+        clearTimeout($.data(this, "timer"));
+        // 設定新的計時器
+        var wait = setTimeout(() => {
+          // 檢查輸入的帳號長度是否符合規則
+          const userNameLength = $(this).val().length;
+          // 不符合規則時，顯示錯誤樣式
+          if (userNameLength < 2 || userNameLength > 7) {
+            $(this).removeClass("is-valid");
+            $(this).addClass("is-invalid");
+            $("#regModal_username_invalid_feedback").text(
+              "帳號長度需介於3-6字數"
+            );
+            flag_username_reg = false;
+            return;
+          }
+          $.ajax({
+            type: "POST",
+            url: "https://url/artEvents-member_control_api_v2.php?action=checkuni",
+            data: JSON.stringify({ username: $(this).val() }),
+            dataType: "json",
+            success: (data) => {
+              if (data.state) {
+                // 帳號不存在，可以使用
+                $("#username_reg").removeClass("is-invalid");
+                $("#username_reg").addClass("is-valid");
+                $("#regModal_username_valid_feedback").text(data.message);
+                flag_username_reg = true;
+              } else {
+                // 帳號已存在不可以使用
+                $("#username_reg").removeClass("is-valid");
+                $("#username_reg").addClass("is-invalid");
+                $("#regModal_username_invalid_feedback").text(data.message);
+                flag_username_reg = true;
+              }
+            },
+            error: function () {
+              Swal.fire({
+                title: "API介接錯誤",
+                text: "https://url/artEvents-member_control_api_v2.php?action=checkuni",
+                icon: "error",
+              });
+            },
+          });
+        }, 1000); 
+        // 儲存計時器
+        $(this).data("timer", wait);
+      });
+
+      //即時監聽password_reg
+      $("#password_reg").bind("input propertychange", function () {
+        $("#re_password_reg").removeClass("is-valid");
+        $("#re_password_reg").addClass("is-invalid");
+        flag_re_password_reg = false;
+
+        if ($(this).val().length > 2 && $(this).val().length < 7) {
+          $(this).removeClass("is-invalid");
+          $(this).addClass("is-valid");
+          flag_password_reg = true;
+        } else {
+          $(this).removeClass("is-valid");
+          $(this).addClass("is-invalid");
+          flag_password_reg = false;
+        }
+      });
+
+      //即時監聽re_password_reg
+      $("#re_password_reg").bind("input propertychange", function () {
+        if (flag_password_reg && $(this).val() === $("#password_reg").val()) {
+          $(this).removeClass("is-invalid");
+          $(this).addClass("is-valid");
+          flag_re_password_reg = true;
+        } else {
+          $(this).removeClass("is-valid");
+          $(this).addClass("is-invalid");
+          flag_re_password_reg = false;
+        }
+      });
+
+      //即時監聽email_reg
+      $("#email_reg").bind("input propertychange", function () {
+        if ($(this).val().length > 2 && $(this).val().length < 11) {
+          $(this).removeClass("is-invalid");
+          $(this).addClass("is-valid");
+          flag_email_reg = true;
+        } else {
+          $(this).removeClass("is-valid");
+          $(this).addClass("is-invalid");
+          flag_email_reg = false;
+        }
+      });
+
+      //即時監聽gender
+      $("input[name='gender']").ready(function () {
+        $("input[name='gender']").change(function () {
+          $("input[name='gender']")
+            .removeClass("is-invalid")
+            .addClass("is-valid");
+          flag_gender = true;
+        });
+      });
+
+      //即時監聽age
+      $("input[name='age']").ready(function () {
+        $("input[name='age']").change(function () {
+          $("input[name='age']")
+            .removeClass("is-invalid")
+            .addClass("is-valid");
+          flag_age = true;
+        });
+      });
+
+      //即時監聽 #selectCity_add
+      $("#selectCity_add").bind("input propertychange", function () {
+        if ($(this).val() != "") {
+          $(this).removeClass("is-invalid");
+          $(this).addClass("is-valid");
+          flag_selectCity_add = true;
+        }
+      });
+
+      //即時監聽income
+      $("input[name='income']").ready(function () {
+        $("input[name='income']").change(function () {
+          $("input[name='income']")
+            .removeClass("is-invalid")
+            .addClass("is-valid");
+          flag_income = true;
+        });
+      });
+    });
+
+    //ok_btn_reg，註冊按鈕監聽
+    $("#ok_btn_reg").click(function () {
+      var JSONdata = {};
+      JSONdata["username"] = $("#username_reg").val();
+      JSONdata["password"] = $("#password_reg").val();
+      JSONdata["email"] = $("#email_reg").val();
+      JSONdata["gender"] = $("input[name='gender']:checked").val();
+      JSONdata["age"] = $("input[name='age']:checked").val();
+      JSONdata["city"] = $("#selectCity_add").val();
+      JSONdata["income"] = $("input[name='income']:checked").val();
+      console.log(JSON.stringify(JSONdata));
+
+      const url =
+        "https://url/artEvents-member_control_api_v2.php?action=register";
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify(JSONdata),
+        dataType: "json",
+        success: showdata_reg, 
+        error: function () {
+          // sweetalert
+          Swal.fire({
+            title: "API介接錯誤",
+            text: url,
+            icon: "error",
+          });
+        },
+      });
+    });
+
+    function showdata_reg(data) {
+      console.log(data);
+      if (data.state) {
+        Swal.fire({
+          title: data.message,
+          icon: "success",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.reload();
+          }
+        });
+      } else {
+        Swal.fire({
+          title: data.message,
+          icon: "error",
+        });
+      }
+    }
+
+    // 計算倒數時間(天)
+    function countDown(date) {
+      var now = new Date();
+      var end = new Date(date);
+      var diff = end - now;
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    // 登入驗證
+    $(function () {
+      let username = "";
+      let password = "";
+      //即時監聽username_login
+      $("#username_login").bind("input propertychange", function () {
+        if (!$(this).val()) return;
+        username = $(this).val();
+      });
+
+      //即時監聽password_login
+      $("#password_login").bind("input propertychange", function () {
+        if (!$(this).val()) return;
+        password = $(this).val();
+      });
+
+      //按鈕監聽ok_btn_log
+      $("#ok_btn_log").click(function () {
+        if (!username || !password) {
+          Swal.fire({
+            title: "輸入錯誤!",
+            text: "請輸入帳號和密碼!",
+            icon: "error",
+          });
+          return;
+        }
+
+        var JSONdata = {};
+        JSONdata["username"] = $("#username_login").val();
+        JSONdata["password"] = $("#password_login").val();
+        console.log(JSON.stringify(JSONdata));
+        $.ajax({
+          type: "POST",
+          url: "https://url/artEvents-member_control_api_v2.php?action=login",
+          data: JSON.stringify(JSONdata),
+          dataType: "json",
+          success: (data) => {
+            console.log(data);
+            if (!data.state) {
+              Swal.fire({
+                title: data.message,
+                text: "如有問題請洽客服🩵",
+                icon: "error",
+                allowOutsideClick: false,
+              });
+              return;
+            }
+
+            Swal.fire({
+              title: data.message,
+              icon: "success",
+              allowOutsideClick: false,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // loginModal 消失
+                $("#loginModal").modal("hide");
+
+                // 顯示歡迎訊息
+                $("#s01_username_showtext").removeClass("d-none");
+                $("#s01_username_text").text(data.data.Username);
+
+                // 顯示登出按鈕
+                $("#s01_logout_btn").removeClass("d-none");
+
+                ///顯示控制台按鈕
+                $("#s01_order_btn").removeClass("d-none");
+
+                ///顯示儀表板
+                $("#s01_control_panel_btn").removeClass("d-none");
+
+                ///顯示會員
+                $("#s01_member").removeClass("d-none");
+
+                // ///顯示購物車
+                // $("#s01_cart").removeClass("d-none");
+
+                ///顯示統計圖按鈕
+                $("#s02_count_btn").removeClass("d-none");
+
+                // 隱藏註冊與登入按鈕
+                $("#s01_reg_btn").addClass("d-none");
+                $("#s01_login_btn").addClass("d-none");
+
+                // uid驗證碼寫入cookie
+                // 7為存活時間
+                setCookie("Uid01", data.data.Uid01, 7);
+                window.location.reload();
+              }
+            });
+          },
+          error: function () {
+            Swal.fire({
+              title: "API介接錯誤?",
+              text: "artEvents-member_control_api_v2.php?action=login",
+              icon: "error",
+              allowOutsideClick: false,
+            });
+          },
+        });
+      });
+
+      // s01_logout_btn按鈕監聽
+      $("#s01_logout_btn").click(function () {
+        setCookie("Uid01", "", 7);
+        location.href = "artEvents.html";
+      });
+    });
+
+
+    function showdata_checkuid(data) {
+      console.log(data);
+
+      //  若改cookie
+      if (!data.state || !data.data.Username) {
+        Swal.fire({
+          title: "麥佇遐手賤 <br> Hands off!",
+          icon: "error",
+          allowOutsideClick: false,
+        });
+        return;
+      }
+
+      // 顯示歡迎訊息
+      $("#s01_username_showtext").removeClass("d-none");
+      $("#s01_username_text").text(data.data.Username);
+
+      // 顯示登出按鈕
+      $("#s01_logout_btn").removeClass("d-none");
+
+      ///顯示會員
+      $("#s01_member").removeClass("d-none");
+
+      // ///顯示購物車
+      // $("#s01_cart").removeClass("d-none");
+
+      ///顯示統計圖按鈕
+      $("#s02_count_btn").removeClass("d-none");
+
+      // 該會員資料的標題
+      $("#memberModalLabel").empty();
+      $("#memberModalLabel").append(
+        ` 訂單明細
+            <br />${data.data.Username} 目前等級: ${data.data.Level} `
+      );
+
+      // 隱藏註冊與登入按鈕
+      $("#s01_reg_btn").addClass("d-none");
+      $("#s01_login_btn").addClass("d-none");
+
+      if (data.data.Username === "admin") {
+        ///顯示控制台按鈕
+        $("#s01_order_btn").removeClass("d-none");
+
+        ///顯示儀表板
+        $("#s01_control_panel_btn").removeClass("d-none");
+      }
+    }
+
+    $("#s01_member").click(() => {
+      setOrderData();
+    });
+
+    function setOrderData(page = 1, limit = currentLimit) {
+      const url = `https://url/order_control_v2.php?action=get_all_by_user&page=${page}&limit=${limit}`;
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        headers: {
+          "Content-Type": "application/json",
+          "api-user-id": getCookie("Uid01"),
+        },
+        dataType: "json",
+        async: false,
+        success: (response) => {
+          showdata_get_all_by_user(response);
+          renderPagination(response.data.pagination);
+        },
+        error: function (e) {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: `url:${url} error:${e}`,
+            icon: "error",
+          });
+        },
+      });
+    }
+
+    // 載入所有會員資料
+    function showdata_get_all_by_user(response) {
+      $("#myorder").empty();
+
+      const data = response.data.data;
+
+      data.forEach(function (item) {
+        const statusBadge = (() => {
+          switch (item.status) {
+            case "0":
+              return setBadge("建立中", "primary");
+            case "1":
+              return setBadge("已成立", "success");
+            case "-1":
+              return setBadge("已取消", "warning");
+            default:
+              return setBadge("未知", "danger");
+          }
+        })();
+        var strHTML = `<tr>
+                        <td data-th="建單時間">${item.created_at}</td>
+                        <td data-th="訂單編號">${item.id}</td>
+                        <td data-th="產品編號">${item.products_id}</td>
+                        <td data-th="商品數量">${item.quantity}</td>
+                        <td data-th="商品單價">${item.unit_price}</td>
+                        <td data-th="會員等級">${item.level}</td>
+                        <td data-th="會員折扣">${item.discount}</td>
+                        <td data-th="商品總額">${item.original_amount}</td>
+                        <td data-th="折扣金額">${item.discount_amount}</td>
+                        <td data-th="訂單總額">${item.amount}</td>
+                        <td data-th="訂單狀態">${statusBadge}</td>
+                        </tr>`;
+
+        $("#myorder").append(strHTML);
+      });
+    }
+
+    // from w3s
+    function setCookie(cname, cvalue, exdays) {
+      const d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+  </script>
+</body>
+
+</html>

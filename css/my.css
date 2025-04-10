@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Zen+Maru+Gothic&display=swap');
+
+:root{
+    --mycolor01:#ede8e2;
+    --mycolor02:#C2E3F4;
+    --mycolor03:#eeb227a8;
+    --mycolor04:#7BAFF2;
+    --mycolor05:#e98ef5;
+    --mycolor06:#6984fd;
+    --mycolor07:#c9fd69;
+    --mycolor08:#a5dff9;
+    --mycolor09:#ef5285;
+    --mycolor10:#60c5ba;
+    --mycolor11:#feee7d;
+    --mycolor12:#f9c00c;
+    --mycolor13:rgba(18, 222, 161, 0.847);
+    --mycolor14:#7200da;
+    --mycolor15:#e35336e6;
+    --mycolor16:#f1724bcb;
+    --mycolor17:#ffc952;
+    --mycolor18:#47b8e0;
+    --mycolor19:#34314c;
+    --mycolor20:#f1f6f9;
+    --mycolor21:#ec572ac4;
+    --mycolor22:#fcbe32;
+    --mycolor23:#004e66;
+    --mycolor24:#4f4f4b;
+    --mycolor25:#eba164b4;
+    
+   
+
+
+
+    --text01:#F2F4EF;
+    --text02:#323330;
+}
+
+/* 背景色 */
+.bg-001{
+    background-color: #f1724bcb;
+    color: #f1f6f9;
+}
+.bg-002{
+    background-color: var(--mycolor02);
+    color: #f0730c;
+}
+.bg-003{
+    background-color: #eeb227a8;
+    color: #0e0735;
+}
+.bg-004{
+    background-color: #7BAFF2;
+    color: #f0f7df;
+}
+.bg-005 {
+    background-color: rgba(18, 222, 161, 0.847);
+    color: #0e0735;
+}
+.bg-006{
+    background-color: var(--mycolor06);
+    color: #27010a;
+}
+.bg-007{
+    background-color: var(--mycolor25);
+    color: var(--mycolor01);
+}
+
+.bg-010{
+    background-color: #F7AA97
+ 
+}
+.bg-011{
+    background-color: #ED9282
+
+}
+.bg-012{
+    background-color: #DE7E73
+ 
+}
+.bg-013{
+    background-color: #CFAA9E
+
+}
+.bg-014{
+    background-color: var(--mycolor17);
+    color: #f0f7df;
+}
+
+
+
+
+
+/* 透明背景 */
+.bg-008{
+    background-color: rgba(185, 94, 33, 0.7);
+
+}
+/* 透明背景 */
+.bg-009{
+    background-color: rgba(18, 222, 161, 0.571);
+  
+}
+
+
+.tx-001{
+    color: var(--mycolor01);
+}
+
+.tx-002{
+    color: var(--mycolor21);
+}
+
+.tx-003{
+    color: var(--mycolor09);
+}
+
+.tx-004{
+    color: var(--mycolor15);
+}
+.tx-005{
+    color: var(--mycolor24);
+}
+.tx-006{
+    color: var(--mycolor25);
+}
+.tx-007{
+    color: var(--mycolor07);
+}
+.tx-008{
+    color: var(--mycolor08);
+}
+
+
+
+
+/* 字形 */
+body {
+    font-family: "Zen Maru Gothic", serif;
+}
+
+/* 文字粗度 */
+.fw-100{
+    font-weight: 100;
+}
+.fw-300{
+    font-weight: 300;
+}
+.fw-500{
+    font-weight: 500;
+}
+.fw-700{
+    font-weight: 700;
+}
+.fw-900{
+    font-weight: 900;
+}
+
+
+
+
+/* 浮起效果 只需寫float */
+.float {
+    width: 200px;
+    height: 200px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.float:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* 外層: .myrollerl 內層: rollerl */
+.myrollerl {
+    position: relative;
+    overflow: hidden;
+}
+
+.myrollerl .rollerl {
+    position: absolute;
+    /* background-color: rgba(252, 35, 64, 0.3); */
+    background-image: linear-gradient(180deg, rgba(240, 9, 9, 0.199), rgba(6, 161, 250, 0.6));
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myrollerl:hover .rollerl {
+    left: 0;
+    transition: left 2s;
+}
+
+/* 外層: .myrollert 內層: rollert */
+.myrollert {
+    position: relative;
+    overflow: hidden;
+}
+
+.myrollert .rollert {
+    position: absolute;
+    /* background-color: rgba(252, 35, 64, 0.3); */
+    background-image: linear-gradient(180deg, rgba(240, 9, 9, 0.199), rgba(6, 161, 250, 0.6));
+    width: 100%;
+    height: 100%;
+    top: 0;
+    top: -100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myrollert:hover .rollert {
+    top: 0;
+    transition: top 2s;
+}
+
+
+/** 背景圖 */
+.bg-cover{
+    background-position: center center;
+    background-size: cover;
+    }
+
+    /* 1.table.table-rwd
+    2.<td data-th="XX">
+    3.<span class="table-col">XX</span>
+*/
+@media screen and (max-width: 768px){
+    .table-rwd thead{
+        display: none;
+    }
+    .table-rwd tbody tr{
+        display: block;
+        border: 5px solid var(--mycolor07);
+        margin-bottom: 10px;
+    }
+    .table-rwd tbody tr td{
+        display: block;
+        overflow: hidden;
+    }
+    .table-rwd tbody tr td::before{
+        content: attr(data-th) " : ";
+        font-weight: 900;
+        color: var(--mycolor06);
+        font-size: 22px;
+        display: block;
+        float: left;
+        width: 30%;
+        text-align: right;
+        padding-right: 30px;
+    }
+    .table-rwd tbody tr td span.table-col{
+        display: block;
+        width: 70%;
+    }
+}

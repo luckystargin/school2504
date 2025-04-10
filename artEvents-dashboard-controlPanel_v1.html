@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>儀表板</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/my.css" />
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <nav class="navbar bg-body-tertiary fixed-top bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <h2 class="flex-grow-1 text-center m-0">儀表板</h2>
+
+      <span class="h4 tx-004 fw-900 me-3 d-none" id="s01_owner_showtext">哈囉， <span class="h3 tx-008"
+          id="s01_owner_text">XXX</span></span>
+
+      <button class="btn btn-warning ms-auto" id="s01_logout_btn">
+        登出
+      </button>
+      <a class="navbar-brand" href="#"></a>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="artEvents-dashboard-controlPanel_v1.html">儀表板</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="artEvents-member-controlPanel_v1.html">會員管理</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="artEvents-order-controlPanel_v2.html">訂單管理</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="row p-3">
+      <div class="col-12 mt-3">
+        <div class="card shadow w-75 mx-auto">
+          <div class="card-body">
+            <h4 class="card-title fw-900 text-center">每日訂單總額</h4>
+            <canvas id="myChart04"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-5">
+        <div class="card shadow w-75 mx-auto">
+          <div class="card-body">
+            <h4 class="card-title fw-900 text-center">每日新增會員</h4>
+            <canvas id="myChart01"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-5">
+        <div class="card shadow w-75 mx-auto">
+          <div class="card-body">
+            <h4 class="card-title fw-900 text-center">會員訂單量</h4>
+            <canvas id="myChart02"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-5">
+        <div class="card shadow w-75 mx-auto">
+          <div class="card-body">
+            <h4 class="card-title fw-900 text-center">縣市分佈top5</h4>
+            <canvas id="myChart03"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script>
+    var mychart01;
+    var mychart02;
+    var mychart03;
+    var mychart04;
+    const uid = getCookie("Uid01");
+
+    // 當權限錯誤時，彈窗
+    function showRoleError() {
+      Swal.fire({
+        title: "管理者 ONLY!",
+        text: "請聯絡管理員",
+        icon: "error",
+        allowOutsideClick: false,
+      }).then((result) => {
+        location.href = "artEvents.html";
+      });
+    }
+
+    $(document).ready(function () {
+      // 取得cookie
+      console.log("uid01: " + uid);
+      // 判斷是否有uid01
+      if (!uid) {
+        showRoleError();
+        return;
+      }
+
+      //將uid01傳遞至後端API執行驗證
+      //input {"uid01" : "xxx"}
+      var JSONdata = {};
+      JSONdata["uid01"] = uid;
+      console.log(JSON.stringify(JSONdata));
+
+      $.ajax({
+        type: "POST",
+        url: "https://url/artEvents-member_control_api_v2.php?action=checkuid",
+        data: JSON.stringify(JSONdata),
+        dataType: "json",
+        success: showdata_checkuid,
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "artEvents-member_control_api_v2.php?action=checkuid",
+            icon: "error",
+          });
+        },
+      });
+    });
+
+    function showdata_checkuid(data) {
+      console.log(data);
+      if (!data.state || data.data.Username !== "admin") {
+        showRoleError();
+        return;
+      }
+
+
+      // 顯示歡迎訊息
+      $("#s01_owner_showtext").removeClass("d-none");
+      $("#s01_owner_text").text(data.data.Username);
+
+      //顯示控制台按鈕
+      $("#s01_dashboard_btn").removeClass("d-none");
+
+      ///顯示統計圖按鈕
+      $("#s02_count_btn").removeClass("d-none");
+
+      // s02_logout_btn按鈕監聽
+      $("#s01_logout_btn").click(function () {
+        setCookie("Uid01", "", 7);
+        location.href = "artEvents.html";
+      });
+
+      handleChart();
+    }
+    // 沒有else(驗證失敗訊息)，直接回到登入頁面
+
+    // from w3s
+    function setCookie(cname, cvalue, exdays) {
+      const d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    // 設定圖表
+    function handleChart() {
+      setCtx01();
+      setCtx02();
+      setCtx03();
+      setCtx04();
+    }
+
+    function setCtx01() {
+      $.ajax({
+        type: "GET",
+        url: "https://url/report-control.php?action=get_member_count",
+        headers: {
+          "api-user-id": uid,
+        },
+        dataType: "json",
+        success: (res) => {
+          console.log(res);
+          //myChart01
+          const ctx01 = document.getElementById("myChart01");
+
+          // https://www.chartjs.org/docs/latest/charts/bar.html
+          mychart01 = new Chart(ctx01, {
+            type: "line",
+            data: {
+              labels: res.data.labels,
+              datasets: [
+                {
+                  label: "新增會員數量",
+                  data: res.data.data,
+                  borderWidth: 3,
+                  backgroundColor: [
+                    "rgb(54, 162, 235)",
+                  ],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "report-control.php?action=get_member_count",
+            icon: "error",
+          });
+        },
+      });
+    }
+
+    function setCtx02() {
+      $.ajax({
+        type: "GET",
+        url: "https://url/report-control.php?action=get_order_level_count",
+        headers: {
+          "api-user-id": uid,
+        },
+        dataType: "json",
+        success: (res) => {
+          console.log(res);
+
+          //myChart02
+          const ctx02 = document.getElementById("myChart02");
+          mychart02 = new Chart(ctx02, {
+            type: "bar",
+            data: {
+              labels: res.data.labels,
+              datasets: [
+                {
+                  label: "訂單數量",
+                  data: res.data.data,
+                  borderWidth: 1,
+                  borderColor: [
+                    "rgb(255, 205, 86)", // 黃
+                    "rgb(153, 102, 255)",
+                    "rgb(255, 99, 132)", // 粉紅
+                    "rgb(75, 192, 192)",
+                  ],
+                  backgroundColor: [
+                    "rgba(255, 205, 86, 0.3)", // 黃
+                    "rgba(153, 102, 255, 0.3)",
+                    "rgba(255, 99, 132, 0.3)", // 粉紅
+                    "rgba(75, 192, 192, 0.3)",
+                  ],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "report-control.php?action=get_order_level_count",
+            icon: "error",
+          });
+        },
+      });
+    }
+    function setCtx03() {
+      $.ajax({
+        type: "GET",
+        url: "https://urlreport-control.php?action=get_top_cities",
+        headers: {
+          "api-user-id": uid,
+        },
+        dataType: "json",
+        success: (res) => {
+          console.log(res);
+          //myChart03
+          const ctx03 = document.getElementById("myChart03");
+          mychart03 = new Chart(ctx03, {
+            type: "doughnut",
+            data: {
+              labels: res.data.labels,
+              datasets: [
+                {
+                  label: "旅館數量",
+                  data: res.data.data,
+                  borderWidth: 1,
+                  borderColor: [
+                    "rgb(255, 99, 132)", // 粉紅
+                    "rgb(255, 159, 64)", // 橘
+                    "rgb(75, 192, 192)", // 綠
+                    "rgb(255, 205, 86)", // 黃
+                    "rgb(153, 102, 255)",
+                  ],
+                  backgroundColor: [
+                    "rgba(255, 99, 132, 0.3)", // 粉紅
+                    "rgba(255, 159, 64, 0.3)", // 橘
+                    "rgba(75, 192, 192, 0.3)", // 綠
+                    "rgba(255, 205, 86, 0.3)", // 黃
+                    "rgba(153, 102, 255, 0.3)",
+                  ],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "report-control.php?action=get_top_cities",
+            icon: "error",
+          });
+        },
+      });
+    }
+    function setCtx04() {
+      $.ajax({
+        type: "GET",
+        url: "https://url/report-control.php?action=get_order_total",
+        headers: {
+          "api-user-id": uid,
+        },
+        dataType: "json",
+        success: (res) => {
+          console.log(res);
+          //myChart04
+          const ctx04 = document.getElementById("myChart04");
+          mychart04 = new Chart(ctx04, {
+            type: "line",
+            data: {
+              labels: res.data.labels,
+              datasets: [
+                {
+                  label: "訂單總額",
+                  data: res.data.data,
+                  borderWidth: 3,
+                  backgroundColor: [
+                    "rgb(255, 205, 86)",
+                  ],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "report-control.php?action=get_order_total",
+            icon: "error",
+          });
+        },
+      });
+    }
+  </script>
+</body>
+
+</html>

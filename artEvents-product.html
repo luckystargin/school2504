@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artEvents 產品練習</title>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/my.css" />
+  <link rel="stylesheet" href="css/all.min.css" />
+  <style>
+    .ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+  <script src="js/table.util.js"></script>
+</head>
+
+<body>
+  <section id="s01" class="bg-light">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-light navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="images/gramophone.gif" style="height: 5vh; width: auto" />
+          </a>
+          <!-- 漢堡條 -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="artEvents.html">首頁</a>
+              </li>
+            </ul>
+            <div>
+              <!-- 會員 -->
+              <button class="btn navbar-brand d-none" id="s01_member" data-bs-toggle="modal"
+                data-bs-target="#memberModal">
+                <img src="images/target-audience.gif" style="height: 5vh; width: auto" />
+              </button>
+
+
+              <span class="h4 tx-004 fw-900 me-3 d-none" id="s01_username_showtext">歡迎會員:
+                <span class="h3 tx-008" id="s01_username_text">XXX</span></span>
+
+              <button class="btn btn-warning d-none" id="s01_logout_btn">
+                登出
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+  <div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModalLabel" aria-hidden="true">
+    <!-- modal-xl 長的輸入框 -->
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <!-- 同按鈕顏色 -->
+        <div class="modal-header text-bg-warning">
+          <h1 class="modal-title fs-4 fw-900 text-white" id="memberModalLabel">
+            xxx的訂單明細
+            <br />等級:xxx
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="mb-3">
+              <div class="col-12">
+                <table class="table shadow-lg mt-5 table-rwd">
+                  <thead>
+                    <tr>
+                      <th>建單時間</th>
+                      <th>訂單編號</th>
+                      <th>產品編號</th>
+                      <th>商品數量</th>
+                      <th>商品單價</th>
+                      <th>會員等級</th>
+                      <th>會員折扣</th>
+                      <th>商品總額</th>
+                      <th>折扣金額</th>
+                      <th>訂單總額</th>
+                      <th>訂單狀態</th>
+                    </tr>
+                  </thead>
+                  <tbody id="myorder">
+                    <tr>
+                      <td data-th="建單時間">xx</td>
+                      <td data-th="訂單編號">xx</td>
+                      <td data-th="產品編號">xx</td>
+                      <td data-th="商品數量">xx</td>
+                      <td data-th="商品單價">xx</td>
+                      <td data-th="會員等級">xx</td>
+                      <td data-th="會員折扣">xx</td>
+                      <td data-th="商品總額">xx</td>
+                      <td data-th="折扣金額">xx</td>
+                      <td data-th="訂單總額">xx</td>
+                      <td data-th="訂單狀態">xx</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+                  <!-- 每頁筆數選擇 -->
+                  <div class="d-flex align-items-center">
+                    <label for="perPageSelect" class="me-2 mb-0">每頁顯示筆數：</label>
+                    <select id="perPageSelect" class="form-select w-auto">
+                      <option value="1">1 筆</option>
+                      <option value="5">5 筆</option>
+                      <option value="10" selected>10 筆</option>
+                      <option value="20">20 筆</option>
+                      <option value="50">50 筆</option>
+                    </select>
+                  </div>
+
+                  <!-- 分頁區塊 -->
+                  <div id="pagination" class="mt-2 mt-md-0"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="s02">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-5 bg-cover" style="background-image: url(images/street.jpg); height: 600px"></div>
+        <div class="col-7 p-5">
+          <div id="title">
+            <div class="display-4 fw-900 text-center tx-003">(展覽名稱)</div>
+            <br />
+            <div class="h4 text-center tx-002">（不完整活動介紹）</div>
+            <br />
+            <div class="h4 text-center tx-002">
+              單價：$ <span class="display-2 fw-900 text-danger">xxx</span> 元
+            </div>
+          </div>
+          <div class="row mt-5 d-flex justify-content-center">
+            <div class="col-4">
+              <select class="form-select mb-3 col-6" aria-label=".form-select-lg example" name="ticket_num"
+                id="ticket_num">
+                <option disabled selected>--請選擇數量--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <div class="d-grid gap-2 mx-auto">
+                <button class="btn btn-outline-primary" type="button" id="buy_btn">
+                  購買票券
+                  <a href="#"></a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 py-3 px-5">
+            <div class="card">
+              <div class="card-header">
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link product-info active" href="#" data-target="intro">活動介紹</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link product-info" href="#" data-target="ticket">取票 / 退票</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link product-info" href="#" data-target="notice">注意事項</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body text-center">
+                <div class="content" id="intro">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <h3 class="mt-2">時間+地點</h3>
+                      <h5>地址</h5>
+                      <h5>倒數 <span class="h3 fw-900 tx-002">八</span>天</h5>
+                      <p>活動介紹</p>
+                    </li>
+                  </ul>
+                </div>
+                <div class="content d-none" id="ticket">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <h3 class="mt-2">取票</h3>
+                      <p>
+                        電子票：成功購票後，您將收到電子票 QR
+                        Code，可於活動當天憑電子票入場。<br />
+                        現場取票：可於活動開始前 30
+                        分鐘至現場票務窗口報到，提供訂單編號領取實體票。<br />
+                        郵寄票券（限特定活動）：選擇郵寄方式者，票券將於活動前
+                        7 天內寄出，請注意查收。
+                      </p>
+
+                      <h3 class="mt-5">退票申請</h3>
+                      <p>
+                        需於 活動開始前 7 天 提出退票申請，逾期恕不受理。<br />
+                        退票將扣除 10% 票務手續費，並於 7-14
+                        個工作天內退款至原付款方式。<br />
+                        部分特殊活動（如限量演出、VIP
+                        票種）不提供退票服務，請於購票前詳閱活動資訊。
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="content d-none" id="notice">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <h3 class="mt-2">入場規定</h3>
+                      <p>
+                        活動開始後 15
+                        分鐘內可入場，遲到者需依現場工作人員安排入席或於中場休息進場。<br />
+                        禁止攜帶外食、飲料（除開放飲食區外），場內禁止吸菸。<br />
+                        活動進行中請 將手機調至靜音或飛航模式，避免影響演出。
+                      </p>
+
+                      <h3 class="mt-5">攝影 / 錄影規範</h3>
+                      <p>
+                        除特定演出允許，活動全程禁止錄音、錄影、閃光燈攝影。<br />
+                        媒體與官方攝影團隊將進行紀錄，現場畫面可能會用於宣傳，購票視為同意拍攝。
+                      </p>
+
+                      <h3 class="mt-5">其他特別提醒</h3>
+                      <p>
+                        若因個人因素無法參加，恕不補發票券或提供額外補償。<br />
+                        <span class="text-danger">若遇天災等不可抗力因素，相關安排將依官方公告為準，請關注最新通知。</span>
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-footer d-flex justify-content-center">
+                <span>多場精彩活動等你來探索！✨</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    let productId = "";
+
+    if (getCookie("Uid01")) {
+      //將uid01傳遞至後端API執行驗證
+      //input {"uid01" : "***"}
+      var JSONdata = {};
+      JSONdata["uid01"] = getCookie("Uid01");
+      console.log(JSON.stringify(JSONdata));
+
+      $.ajax({
+        type: "POST",
+        url: "https://url/artEvents-member_control_api_v2.php?action=checkuid",
+        data: JSON.stringify(JSONdata),
+        dataType: "json",
+        success: showdata_checkuid,
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "artEvents-member_control_api_v2.php?action=checkuid",
+            icon: "error",
+          });
+        },
+      });
+    } else {
+      Swal.fire({
+        title: "提醒：購票需登入會員",
+        icon: "warning",
+        allowOutsideClick: false,
+      });
+    }
+
+    function showdata_checkuid(data) {
+      console.log(data);
+
+      //  若改cookie
+      if (!data.state) {
+        Swal.fire({
+          title: "手賤？",
+          icon: "error",
+          allowOutsideClick: false,
+        });
+        return;
+      }
+
+      // 顯示歡迎訊息
+      $("#s01_username_showtext").removeClass("d-none");
+      $("#s01_username_text").text(data.data.Username);
+
+      // 顯示登出按鈕
+      $("#s01_logout_btn").removeClass("d-none");
+
+      ///顯示會員
+      $("#s01_member").removeClass("d-none");
+
+      // 該會員資料的標題
+      $("#memberModalLabel").empty();
+      $("#memberModalLabel").append(
+        ` 訂單明細
+            <br />${data.data.Username} 目前等級: ${data.data.Level} `
+      );
+
+      // 隱藏註冊與登入按鈕
+      $("#s01_reg_btn").addClass("d-none");
+      $("#s01_login_btn").addClass("d-none");
+
+      // s01_logout_btn按鈕監聽
+      $("#s01_logout_btn").click(function () {
+        setCookie("Uid01", "", 7);
+        location.href = "artEvents.html";
+      });
+    }
+
+
+    // 查看該會員資料
+    $("#s01_member").click(() => {
+      setOrderData();
+    });
+
+    function setOrderData(page = 1, limit = currentLimit) {
+      const url = `https://url/order_control_v2.php?action=get_all_by_user&page=${page}&limit=${limit}`;
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        headers: {
+          "Content-Type": "application/json",
+          "api-user-id": getCookie("Uid01"),
+        },
+        dataType: "json",
+        async: false,
+        success: (response) => {
+          showdata_get_all_by_user(response);
+          renderPagination(response.data.pagination);
+        },
+        error: function (e) {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: `url:${url} error:${e}`,
+            icon: "error",
+          });
+        },
+      });
+    }
+
+    // 載入所有會員資料
+    function showdata_get_all_by_user(response) {
+      $("#myorder").empty();
+
+      const data = response.data.data;
+
+      data.forEach(function (item) {
+        const statusBadge = (() => {
+          switch (item.status) {
+            case "0":
+              return setBadge("建立中", "primary");
+            case "1":
+              return setBadge("已成立", "success");
+            case "-1":
+              return setBadge("已取消", "warning");
+            default:
+              return setBadge("未知", "danger");
+          }
+        })();
+        var strHTML = `<tr>
+                        <td data-th="建單時間">${item.created_at}</td>
+                        <td data-th="訂單編號">${item.id}</td>
+                        <td data-th="產品編號">${item.products_id}</td>
+                        <td data-th="商品數量">${item.quantity}</td>
+                        <td data-th="商品單價">${item.unit_price}</td>
+                        <td data-th="會員等級">${item.level}</td>
+                        <td data-th="會員折扣">${item.discount}</td>
+                        <td data-th="商品總額">${item.original_amount}</td>
+                        <td data-th="折扣金額">${item.discount_amount}</td>
+                        <td data-th="訂單總額">${item.amount}</td>
+                        <td data-th="訂單狀態">${statusBadge}</td>
+                        </tr>`;
+
+        $("#myorder").append(strHTML);
+      });
+    }
+
+    //按鈕監聽buy_btn
+    $("#buy_btn").click(function () {
+      if (!getCookie("Uid01")) {
+        Swal.fire({
+          title: "購票請先登入會員!",
+          icon: "warning",
+          allowOutsideClick: false,
+        }).then(() => {
+          location.href = "artEvents.html";
+        });
+        return;
+      }
+
+      const quantity = $("#ticket_num option:selected").val();
+      if (isNaN(Number(quantity)) || quantity == "0") {
+        Swal.fire({
+          title: "請選擇票券數量",
+          icon: "warning",
+          allowOutsideClick: false,
+        });
+        return;
+      }
+
+      Swal.fire({
+        title: `確認購買 ${quantity} 張?`,
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "確認",
+        denyButtonText: `取消`,
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (!result.isConfirmed) {
+          return;
+        }
+
+        buyProduct(quantity);
+      });
+
+      //將uid01傳遞至後端API執行驗證
+    });
+
+    // 購買票券
+    function buyProduct(quantity) {
+      $.ajax({
+        type: "POST",
+        url: "https://url/artEvents-member_control_api_v2.php?action=checkuid",
+        data: JSON.stringify({
+          uid01: getCookie("Uid01"),
+        }),
+        dataType: "json",
+        success: (response) => {
+          //  若改cookie
+          if (!response.state) {
+            Swal.fire({
+              title: "帳號驗證錯誤",
+              icon: "error",
+              allowOutsideClick: false,
+            });
+            return;
+          }
+
+          // 票券張數-傳遞至後端API 執行更新
+          console.log("選取的票券張數:", quantity);
+
+          const url =
+            "https://url/order_control_v2.php?action=create";
+
+          $.ajax({
+            type: "POST",
+            url: url,
+            headers: {
+              "Content-Type": "application/json",
+              "api-user-id": getCookie("Uid01"),
+            },
+            data: JSON.stringify({
+              products_id: productId,
+              quantity: quantity,
+            }),
+            dataType: "json",
+            async: false,
+            success: showdata_create,
+            error: function (e) {
+              Swal.fire({
+                title: "API介接錯誤?",
+                text: `url:${url} error:${e}`,
+                icon: "error",
+              });
+            },
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "artEvents-member_control_api_v2.php?action=checkuid",
+            icon: "error",
+          });
+        },
+      });
+    }
+    function showdata_create(data) {
+      console.log(data);
+
+      if (!data.state) {
+        Swal.fire({
+          title: "購票失敗",
+          text: data.message,
+          icon: "error",
+          allowOutsideClick: false,
+        });
+        return;
+      }
+      Swal.fire({
+        title: "購票成功",
+        icon: "success",
+        allowOutsideClick: false,
+      });
+
+ 
+    }
+
+    // from w3s
+    function setCookie(cname, cvalue, exdays) {
+      const d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    //取得網址列的商品uid
+    $(document).ready(function () {
+      const params = new URLSearchParams(window.location.search);
+      productId = params.get("id");
+      getProduct(productId);
+    });
+
+    // 取得商品資訊
+    function getProduct(id) {
+      const url = `https://url/art/porduct_control.php?action=get_by_id&id=${id}`;
+      console.log(url);
+      $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: (data) => {
+          productInfo(data.data);
+        },
+      });
+    }
+
+    // 帶入商品標題
+    function productInfo(pro) {
+      console.log(pro);
+
+      // ellipsis(css)寬度縮短字數
+      var protitle = ` <div class="display-5 fw-900 text-center tx-003">${pro.title}</div>
+                        <br>
+                        <div class=" text-center ellipsis">${pro.descriptionFilterHtml}</div>
+                          <br>
+                               <div class="h4 text-center tx-002">單價：$ <span class="display-5 fw-900 text-danger">${pro.amount}</span> 元</div>`;
+      $("#title").empty().append(protitle);
+
+      var difdate = countDown(pro.startDate);
+
+
+
+      var proinfo = `                                   
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <h3 class="fw-900 tx-002">${pro.startDate} ${pro.showInfo[0].locationName}</h3>
+                                           <p>${pro.showInfo[0].location}</p>
+                                          <h5>倒數 <span class="h3 fw-900 tx-002">${difdate}</span> 天</h5>
+                                        <p class="mt-4">${pro.descriptionFilterHtml}</p>
+
+                                        </li>
+                                    </ul>`;
+      $("#intro").empty().append(proinfo);
+    }
+
+    // 計算倒數時間(天)
+    function countDown(date) {
+      var now = new Date();
+      var end = new Date(date);
+      var diff = end - now;
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    // nav-link
+    $(document).ready(function () {
+      $(".product-info").click(function (event) {
+        event.preventDefault();
+
+     
+        $(".product-info").removeClass("active");
+
+        $(this).addClass("active");
+
+        // 隱藏所有內容
+        $(".content").addClass("d-none");
+
+        // 顯示對應內容
+        let target = $(this).data("target");
+        $("#" + target).removeClass("d-none");
+      });
+    });
+  </script>
+</body>
+
+</html>

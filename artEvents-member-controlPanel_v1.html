@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>會員管理</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/my.css" />
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/table.util.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .content {
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar bg-body-tertiary fixed-top bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <h2 class="flex-grow-1 text-center m-0">會員管理</h2>
+      <span class="h4 tx-004 fw-900 me-3 d-none" id="s01_owner_showtext">哈囉， <span class="h3 tx-008"
+          id="s01_owner_text">XXX</span></span>
+
+      <button class="btn btn-warning ms-auto" id="s01_logout_btn">
+        登出
+      </button>
+      <a class="navbar-brand" href="#"></a>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="artEvents-dashboard-controlPanel_v1.html">儀表板</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="artEvents-member-controlPanel_v1.html">會員管理</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="artEvents-order-controlPanel_v2.html">訂單管理</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container content">
+    <div class="row">
+      <div class="col-12">
+        <table class="table shadow-lg mt-5 table-rwd">
+          <thead>
+            <tr>
+              <th>編號</th>
+              <th>帳號</th>
+              <th>Email</th>
+              <th>會員等級</th>
+              <th>狀態</th>
+              <th>註冊時間</th>
+              <th>功能</th>
+            </tr>
+          </thead>
+          <tbody id="mydata">
+            <tr>
+              <td data-th="編號">xx</td>
+              <td data-th="帳號">xx</td>
+              <td data-th="Email">xx</td>
+              <td data-th="會員等級">xx</td>
+              <td data-th="狀態">xx</td>
+              <td data-th="註冊時間">xx</td>
+              <td data-th="功能">
+                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="xx"
+                  data-username="xx" data-email="xxxx" data-level="xx" id="updata_btn">
+                  更新
+                </button>
+                <button class="btn btn-danger">停權</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- w3s--updateModal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header text-bg-primary fw-900">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">會員更新</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="updateModal_id" name="updateModal_id" />
+          <div class="mb-3">
+            <label for="updateModal_username" class="form-label">帳號</label>
+            <input type="text" class="form-control" disabled id="updateModal_username" name="updateModal_username" />
+          </div>
+
+          <div class="mb-3">
+            <label for="updateModal_level" class="select-label">會員等級</label>
+            <select id="updateModal_level" name="updateModal_level" class="form-select">
+              <option value="新芽">新芽</option>
+              <option value="小草">小草</option>
+              <option value="小花">小花</option>
+              <option value="大樹">大樹</option>
+            </select>
+            <div class="valid-feedback">符合規則</div>
+            <div class="invalid-feedback">不符合規則</div>
+          </div>
+
+          <div class="mb-3 input-group">
+            <label for="updateModal_email" class="form-label">Email</label>
+            <div class="input-group">
+              <input type="text" class="form-control is-invalid" placeholder="3-20字數" id="updateModal_email"
+                name="updateModal_email" />
+              <div class="valid-feedback">符合規則</div>
+              <div class="invalid-feedback">不符合規則</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="updateModal_status" class="select-label">狀態</label>
+            <select id="updateModal_status" name="updateModal_status" class="form-select">
+              <option value="-1">停權</option>
+              <option value="1">啟用</option>
+            </select>
+            <div class="valid-feedback">符合規則</div>
+            <div class="invalid-feedback">不符合規則</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              取消
+            </button>
+            <button type="button" class="btn btn-success" id="updateModal_update_btn">
+              確認更新
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    var flag_updateModal_level = false;
+    var flag_updateModal_email = false;
+
+    var u_id; //for update
+    const uid = getCookie("Uid01");
+
+    function showRoleError() {
+      Swal.fire({
+        title: "管理者 ONLY!",
+        text: "請聯絡管理員",
+        icon: "error",
+        allowOutsideClick: false,
+      }).then((result) => {
+        location.href = "artEvents.html";
+      });
+    }
+
+    $(document).ready(() => {
+      if (!uid) {
+        showRoleError();
+        return;
+      }
+
+      //將uid01傳遞至後端API執行驗證
+      var JSONdata = {};
+      JSONdata["uid01"] = uid;
+      console.log(JSON.stringify(JSONdata));
+
+      $.ajax({
+        type: "POST",
+        url: "https://url/artEvents-member_control_api_v2.php?action=checkuid",
+        data: JSON.stringify(JSONdata),
+        dataType: "json",
+        success: checkuid,
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: "artEvents-member_control_api_v2.php?action=checkuid",
+            icon: "error",
+          });
+        },
+      });
+    });
+
+    /**
+     * 驗證使用者是否合法
+     **/
+    function checkuid(data) {
+      console.log(data);
+      if (!data.state || data.data.Username !== "admin") {
+        showRoleError();
+        return;
+      }
+      // 顯示歡迎訊息
+      $("#s01_owner_showtext").removeClass("d-none");
+      $("#s01_owner_text").text(data.data.Username);
+
+      //顯示控制台按鈕
+      $("#s01_dashboard_btn").removeClass("d-none");
+
+      ///顯示統計圖按鈕
+      $("#s02_count_btn").removeClass("d-none");
+
+      // s02_logout_btn按鈕監聽
+      $("#s01_logout_btn").click(function () {
+        setCookie("Uid01", "", 7);
+        location.href = "artEvents.html";
+      });
+
+      setMemberData();
+    }
+
+    // 載入所有會員資料(sql)
+    function setMemberData() {
+      const url =
+        "https://url/artEvents-member_control_api_v2.php?action=getalldata";
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: showdata_getalldata,
+        async: false,
+        error: function (e) {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: `url:${url} error:${e}`,
+            icon: "error",
+          });
+        },
+      });
+
+      listen();
+    }
+
+    // 等待回應再執行監聽 function
+    function listen() {
+      // 按鈕監聽 updata_btn
+      $("#mydata #updata_btn").click(function () {
+        console.log($(this).data("id"));
+        console.log($(this).data("username"));
+        console.log($(this).data("level"));
+        console.log($(this).data("email"));
+
+        // 將資料同步至modal
+        $("#updateModal_id").val($(this).data("id"));
+        $("#updateModal_username").val($(this).data("username"));
+        $("#updateModal_level").val($(this).data("level"));
+        $("#updateModal_email").val($(this).data("email"));
+        $("#updateModal_status").val($(this).data("status"));
+      });
+
+      //按鈕監聽 suspend_btn
+      $("#mydata #suspend_btn").click(function () {
+        Swal.fire({
+          title: "是否停權?",
+          showDenyButton: true,
+          showCancelButton: false,
+          confirmButtonText: "確認",
+          denyButtonText: `取消`,
+          allowOutsideClick: false,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            console.log($(this).data("id"));
+            var JSONdata = {};
+            JSONdata["id"] = $(this).data("id");
+            console.log(JSON.stringify(JSONdata));
+
+            const data = {
+              action: "suspend",
+              id: $(this).data("id"),
+            };
+            const url = `https://url/artEvents-member_control_api_v2.php?${$.param(
+              data
+            )}`;
+
+            $.ajax({
+              type: "DELETE",
+              url: url,
+              headers: {
+                "api-user-id": uid,
+              },
+              dataType: "json",
+              success: showdata_delete,
+              error: function () {
+                Swal.fire({
+                  title: "API介接錯誤!",
+                  text: url,
+                  icon: "error",
+                });
+              },
+            });
+          }
+        });
+      });
+    }
+
+
+
+    //即時監聽updateModal_email
+    $("#updateModal_email").bind("input propertychange", function () {
+      if ($(this).val().length > 2 && $(this).val().length < 21) {
+        $(this).removeClass("is-invalid");
+        $(this).addClass("is-valid");
+        flag_updateModal_email = true;
+      } else {
+        $(this).removeClass("is-valid");
+        $(this).addClass("is-invalid");
+        flag_updateModal_email = false;
+      }
+    });
+
+    //按鈕監聽 updateModal_update_btn
+    $("#updateModal_update_btn").click(function () {
+      if (!flag_updateModal_email) {
+        Swal.fire({
+          title: "欄位內容有錯誤!",
+          icon: "error",
+        });
+        return;
+      }
+
+      console.log(
+        "選取的會員等級:",
+        $("#updateModal_level option:selected").val()
+      );
+      console.log("Email:", $("#updateModal_email").val());
+      // 傳遞至後端API 執行更新
+      var JSONdata = {};
+      JSONdata["id"] = $("#updateModal_id").val();
+      JSONdata["level"] = $("#updateModal_level option:selected").val();
+      JSONdata["email"] = $("#updateModal_email").val();
+      JSONdata["status"] = $("#updateModal_status option:selected").val();
+      console.log("傳送資料:", JSON.stringify(JSONdata));
+
+      const url =
+        "https://url/artEvents-member_control_api_v2.php?action=update";
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify(JSONdata),
+        dataType: "json",
+        success: showdata_update,
+        error: function () {
+          Swal.fire({
+            title: "API介接錯誤?",
+            text: url,
+            icon: "error",
+          });
+        },
+      });
+    });
+
+    // 載入所有會員資料
+    function showdata_getalldata(data) {
+      $("#mydata").empty();
+
+    
+      data.data.forEach(function (item) {
+        const statusBadge = (() => {
+          switch (item.status) {
+            case "0":
+              return setBadge("建立", "primary");
+            case "1":
+              return setBadge("啟用", "success");
+            case "-1":
+              return setBadge("停權", "danger");
+            default:
+              return setBadge("未知", "danger");
+          }
+        })();
+        var strHTML = `<tr>
+                        <td data-th="編號">${item.ID}</td>
+                        <td data-th="帳號">${item.Username}</td>
+                        <td data-th="Email">${item.Email}</td>
+                        <td data-th="會員等級">${item.Level}</td>
+                        <td data-th="狀態">${statusBadge}</td>
+                        <td data-th="註冊時間">${item.Created_at}</td>
+                        <td data-th="功能">
+                            <button class="btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#updateModal" 
+                                data-id="${item.ID}" 
+                                data-username="${item.Username}" 
+                                data-email="${item.Email}" 
+                                data-level="${item.Level}" 
+                                data-status="${item.status}"
+                                id="updata_btn">更新</button>
+                            <button class="btn btn-danger" data-id="${item.ID}" id="suspend_btn">停權</button>
+                        </td>
+                        </tr>`;
+
+        $("#mydata").append(strHTML);
+      });
+    }
+
+    function showdata_update(data) {
+      console.log(data);
+      if (data.state) {
+        Swal.fire({
+          title: data.message,
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "確認",
+          denyButtonText: `Don't save`,
+          icon: "success",
+          allowOutsideClick: false,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            location.href = "artEvents-member-controlPanel_v1.html";
+          }
+        });
+      } else {
+        Swal.fire({
+          title: data.message,
+          icon: "error",
+        });
+      }
+    }
+
+    function showdata_delete(data) {
+      console.log(data);
+      if (data.state) {
+        Swal.fire({
+          title: data.message,
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "確認",
+          denyButtonText: `Don't save`,
+          icon: "success",
+          allowOutsideClick: false,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            location.href = "artEvents-member-controlPanel_v1.html";
+          }
+        });
+      } else {
+        Swal.fire({
+          title: data.message,
+          icon: "error",
+        });
+      }
+    }
+
+    // from w3s
+    function setCookie(cname, cvalue, exdays) {
+      const d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+  </script>
+</body>
+
+</html>
