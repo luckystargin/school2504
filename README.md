@@ -9,10 +9,10 @@
 
 |    分類     |    技術項目                                                                 |
 |------------|------------------------------------------------------------------------------|
-|   前端     | HTML、CSS、JavaScript、Bootstrap v5.2.3、wow.js、Animate v4.1.1、chart.js、jQuery v3.7.1 |
+|   前端     | HTML5、CSS3、JavaScript、Bootstrap、jQueryWOW.js、AJAX、Animate.css、Chart.js、SweetAlert |
 |   後端     | PHP                                                                          |
 |   資料庫   | MySQL                                                                        |
-|   其他技術 | Git、台灣縣市鄉鎮 API、台灣藝文活動 API（JSON → 匯入資料庫 → 自建 API）         |
+|   其他技術 | Git/GitHub、台灣縣市鄉鎮 API、台灣藝文活動 API（JSON → 匯入資料庫 → 自建 API）         |
 
 ---
 
