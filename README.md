@@ -45,7 +45,7 @@
 ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-50-37.png)
 **購買票券**
 
-![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-49-43.png)
+![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-10_11-15-22.png)
 **會員瀏覽訂單**
 
 
@@ -62,7 +62,7 @@
    ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-54-51.png)
 **會員管理**
   
-   ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-55-09.png)
+   ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-10_11-31-59.png)
 **會員更新**
 
 #### b. 訂單管理
@@ -75,7 +75,7 @@
     ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-54-28.png)
 **訂單管理**
 
-   ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-53-41.png)
+   ![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-10_11-33-01.png)
 **訂單更新**
 
 #### c. 圖表分析
