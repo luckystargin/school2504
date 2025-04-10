@@ -25,8 +25,9 @@
 - 購買票券功能 
 - 會員查看歷史訂單
 
-  [images/Snipaste_2025-04-09_17-48-45.png](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-48-45.png)
-  -篩選各縣市藝文活動
+![歷史訂單圖片](https://github.com/luckystargin/school2504/blob/main/images/Snipaste_2025-04-09_17-48-45.png)
+- 篩選各縣市藝文活動
+
 
 ### 2. 管理者後台功能
 
